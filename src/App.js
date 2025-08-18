@@ -1,16 +1,20 @@
 import React from 'react'
-import {getProducts} from "./services/api"
+import { NavLink, Outlet } from 'react-router-dom'
 
 export default function App() {
-  const Products = getProducts();
-  console.log(Products);
-
-
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <p>hello there</p>
+      <header>
+        <nav>
+          <ul className='listNav'>
+            <li><NavLink to="/">На главную</NavLink></li>
+            <li><NavLink to="/catalog">Каталог</NavLink></li>
+            <li><NavLink to="/cart">Корзина</NavLink></li>
+          </ul>
+        </nav>
       </header>
+      <Outlet />
     </div>
   )
 }

@@ -12,11 +12,15 @@ code {
     monospace;
 }
 
+ul {
+  list-style: none;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -49,4 +53,10 @@ code {
   to {
     transform: rotate(360deg);
   }
+} */
+
+.listNav {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
 }
