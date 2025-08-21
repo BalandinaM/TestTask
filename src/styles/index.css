@@ -16,6 +16,12 @@ ul {
   list-style: none;
 }
 
+a, a:visited, a:hover, a:active {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer; 
+}
+
 .App {
   text-align: center;
 }
@@ -59,4 +65,17 @@ ul {
   display: flex;
   justify-content: center;
   gap: 60px;
+}
+
+.products_list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 60px;
+}
+
+.products_item {
+  padding: 20px;
+  border: 1px solid grey;
+  flex: 0 0 150px;
 }
