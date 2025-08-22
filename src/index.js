@@ -4,11 +4,12 @@ import './styles/index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ErrorPage404 from './ErrorPage404'
 import { createRoot } from 'react-dom/client'
-import { getProductColor, getProducts } from './services/api'
+import { getProductColor, getProducts, getSizes, getProduct } from './services/api'
 import { Catalog } from './catalog/catalog'
 import { Cart } from './cart/cart'
 import { Home } from './home/home'
 import { ProductPage } from './productPage/productPage';
+//import { ListSizes } from './listSizes/listSizes'
 
 const router = createBrowserRouter([
   {
@@ -24,8 +25,8 @@ const router = createBrowserRouter([
         path: "/catalog",
         element: <Catalog />,
         loader: async () => {
-          const Products = await getProducts();
-          return Products;
+          const products = await getProducts();
+          return products;
         },
         HydrateFallback: () => <div>Загрузка каталога...</div>,
       },
@@ -33,8 +34,14 @@ const router = createBrowserRouter([
         path: "/catalog/product/:productId/:colorId",
         element: <ProductPage />,
         loader: async ({params}) => {
-          const Product = await getProductColor(params.productId, params.colorId);
-          return Product;
+          const productColor = await getProductColor(params.productId, params.colorId);
+          const product = await getProduct(params.productId)
+          const allSizes = await getSizes();
+          return {
+            productColor,
+            allSizes,
+            product
+          };
         },
         HydrateFallback: () => <div>Загрузка страницы товара...</div>,
       },
