@@ -8,7 +8,7 @@ export const Catalog = () => {
   //заменить map на flatmap
   const productsForRender = products.map((item) => {
     const productForRender = item.colors.map((elem) => {
-      console.log(elem);
+      //console.log(elem);
       return (
         <li key={`${item.id} + ${elem.id}`} className='products_item'>
           <NavLink to={`product/${item.id}/${elem.id}`}>
@@ -27,7 +27,7 @@ export const Catalog = () => {
         </li>
       );
     });
-    console.log(productForRender);
+    //console.log(productForRender);
     return productForRender;
   });
 
