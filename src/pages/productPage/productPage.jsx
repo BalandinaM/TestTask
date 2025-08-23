@@ -13,6 +13,23 @@ export const ProductPage = () => {
     <div>
       <ProductImages images={productColor.images} nameAlt={productColor.name} />
       <p>Цена: {productColor.price}</p>
+      <div className="wrap_selectColor">
+        <p>Доступные цвета:</p>
+        <ul className="colorsList">
+          {product.colors.map((color) => {
+            return (
+              <li key={color.id}>
+                <NavLink
+                  to={`/catalog/product/${productId}/${color.id}`}
+                  className={({ isActive }) => (isActive ? "active-color" : "")}
+                >
+                  {color.name}
+                </NavLink>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
       <div className="wrap_sizes">
         <p>Доступные размеры: </p>
         <div>
@@ -34,23 +51,8 @@ export const ProductPage = () => {
           ))}
         </div>
       </div>
-      <h3>{productColor.description}</h3>
-      <ul>
-        Доступные цвета
-        {product.colors.map((color) => {
-          return (
-            <li key={color.id}>
-              <NavLink
-                to={`/catalog/product/${productId}/${color.id}`}
-                className={({ isActive }) => (isActive ? "active-color" : "")}
-              >
-                {color.name}
-              </NavLink>
-            </li>
-          );
-        })}
-      </ul>
       <button>Добавить в корзину</button>
+      <h3>{productColor.description}</h3>   
     </div>
   );
 };

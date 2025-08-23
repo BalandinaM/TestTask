@@ -80,6 +80,18 @@ a, a:visited, a:hover, a:active {
   flex: 0 0 150px;
 }
 
+.wrap_selectColor {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
+.colorsList {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
+
 .wrap_sizes {
   display: flex;
   gap: 25px;
