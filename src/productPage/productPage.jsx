@@ -3,10 +3,24 @@ import {
   useLoaderData,
   useParams,
 } from "react-router-dom";
+import { useState } from "react";
 
 export const ProductPage = () => {
   const { productColor, allSizes, product } = useLoaderData();
   const { productId } = useParams();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === productColor.images.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? productColor.images.length - 1 : prev -1
+    );
+  };
 
   console.log(productColor);
   console.log(allSizes);
@@ -14,12 +28,33 @@ export const ProductPage = () => {
 
   return (
     <div>
-      <img
-        src={productColor.images[0]}
-        alt={productColor.name}
-        width={50}
-        height={75}
-      />
+      <div className="wrap_image">
+        {productColor.images.length > 1 && (
+          <>
+            <button
+              onClick={prevImage}
+              className=""
+              aria-label="Предыдущее изображение"
+            >
+              Назад
+            </button>
+            <img
+              src={productColor.images[currentImageIndex]}
+              alt={productColor.name}
+              width={50}
+              height={75}
+            />
+
+            <button
+              onClick={nextImage}
+              className=""
+              aria-label="Следующее изображение"
+            >
+              Вперед
+            </button>
+          </>
+        )}
+      </div>
       <p>Цена: {productColor.price}</p>
       <div className="wrap_sizes">
         <p>Доступные размеры: </p>
