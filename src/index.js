@@ -5,10 +5,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ErrorPage404 from './ErrorPage404'
 import { createRoot } from 'react-dom/client'
 import { getProductColor, getProducts, getSizes, getProduct } from './services/api'
-import { Catalog } from './catalog/catalog'
-import { Cart } from './cart/cart'
-import { Home } from './home/home'
-import { ProductPage } from './productPage/productPage';
+import { Catalog } from './pages/catalog/catalog'
+import { Cart } from './pages/cart/cart'
+import { Home } from './pages/home/home'
+import { ProductPage } from './pages/productPage/productPage';
 //import { ListSizes } from './listSizes/listSizes'
 
 const router = createBrowserRouter([
