@@ -9,6 +9,7 @@ import { Catalog } from './pages/catalog/catalog'
 import { Cart } from './pages/cart/cart'
 import { Home } from './pages/home/home'
 import { ProductPage } from './pages/productPage/productPage';
+import { CartContextProvider } from './CartContext'
 //import { ListSizes } from './listSizes/listSizes'
 
 const router = createBrowserRouter([
@@ -60,9 +61,11 @@ if (rootElement) {
   const root = createRoot(rootElement);
   root.render(
     <React.StrictMode>
-      <Suspense fallback={<div>Загрузка приложения...</div>}>
-        <RouterProvider router={router} />
-      </Suspense>
+      <CartContextProvider>
+        <Suspense fallback={<div>Загрузка приложения...</div>}>
+          <RouterProvider router={router} />
+        </Suspense>
+      </CartContextProvider>
     </React.StrictMode>
   );
 }

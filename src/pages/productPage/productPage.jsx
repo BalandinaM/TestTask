@@ -1,13 +1,34 @@
 import { NavLink, useLoaderData, useParams } from "react-router-dom";
 import { ProductImages } from "../../components/productImages/productImages";
+import { useContext, useState } from "react";
+import { CartContext } from "../../CartContext";
 
 export const ProductPage = () => {
   const { productColor, allSizes, product } = useLoaderData();
-  const { productId } = useParams();
+  const { productId, colorId } = useParams();
+  const [selectedSize, setSelectedSize] = useState(null);
+  const cart = useContext(CartContext);
 
-  console.log(productColor);
-  console.log(allSizes);
-  console.log(product);
+  // console.log(productColor);
+  // console.log(allSizes);
+  // console.log(product);
+
+  const handleAddToCart = () => {
+    if (!selectedSize) return; // Защита от добавления без размера
+    
+    const itemToAdd = {
+      productId: productId,
+      colorId: colorId,
+      sizeId: selectedSize,
+    };
+    
+    cart.append(itemToAdd);
+    setSelectedSize(null)
+  };
+
+  const handleSizeSelect = (sizeId) => {
+    setSelectedSize(sizeId);
+  };
 
   return (
     <div>
@@ -45,13 +66,16 @@ export const ProductPage = () => {
                 value={size.id}
                 name="size_radio_button"
                 disabled={!productColor.sizes.includes(size.id)}
+                onChange={() => handleSizeSelect(size.id)} // Обработчик выбора
+                checked={selectedSize === size.id} // Отслеживаем выбор
               />
               {size.label} ({size.number})
             </label>
           ))}
         </div>
       </div>
-      <button>Добавить в корзину</button>
+      <button onClick={handleAddToCart}
+        disabled={!selectedSize}>Добавить в корзину</button>
       <h3>{productColor.description}</h3>   
     </div>
   );
