@@ -1,12 +1,11 @@
 import { nanoid } from "nanoid";
 import { createContext, useState } from "react";
+import { getProductColor } from "./services/api";
 
 const CartContext = createContext();
 
 const CartContextProvider = (props) => {
   const [arrItems, setArrItems] = useState([]); // все товары, которые сейчас в корзине
-  //const [swowItems, setShowItems] = useState(false)// содержимое корзины сейчас показывается?
-  //const [showAlert, setShowAlert] = useState(null);// сообщение после добавления в корзину
 
   const append = (item) => {
     const newItem = {
@@ -16,14 +15,28 @@ const CartContextProvider = (props) => {
     setArrItems([...arrItems, newItem]);
   };
 
+  const getProductsForCart = async (arrItems) => {
+    try {
+      const productPromises = arrItems.map((item) =>
+        getProductColor(item.productId, item.colorId)
+      );
+
+      const productsForCart = await Promise.all(productPromises);
+      return productsForCart;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
+  };
+
   const remove = (id) => {
     const newCart = arrItems.filter((item) => item.id !== id);
     setArrItems(newCart);
   };
 
-  // контекст, который будет доступен всем потомкам
   const value = {
     items: arrItems,
+    getProductsForCart: getProductsForCart,
     append: append,
     remove: remove,
   };

@@ -9,10 +9,6 @@ export const ProductPage = () => {
   const [selectedSize, setSelectedSize] = useState(null);
   const cart = useContext(CartContext);
 
-  // console.log(productColor);
-  // console.log(allSizes);
-  // console.log(product);
-
   const handleAddToCart = () => {
     if (!selectedSize) return; // Защита от добавления без размера
     
