@@ -1,11 +1,11 @@
 import { nanoid } from "nanoid";
 import { createContext, useState } from "react";
-import { getProductColor } from "./services/api";
+import { getProductColor, getSize } from "./services/api";
 
 const CartContext = createContext();
 
 const CartContextProvider = (props) => {
-  const [arrItems, setArrItems] = useState([]); // все товары, которые сейчас в корзине
+  const [arrItems, setArrItems] = useState([]);
 
   const append = (item) => {
     const newItem = {
@@ -17,9 +17,24 @@ const CartContextProvider = (props) => {
 
   const getProductsForCart = async (arrItems) => {
     try {
-      const productPromises = arrItems.map((item) =>
-        getProductColor(item.productId, item.colorId)
-      );
+      const productPromises = arrItems.map(async (item) => {
+        try {
+          const [productData, sizeData] = await Promise.all([
+            getProductColor(item.productId, item.colorId),
+            getSize(item.sizeId)
+          ]);
+          return {
+            description: productData.description,
+            price: productData.price,
+            image: productData.images[0],
+            sizeLabel: sizeData.label,
+            sizeNum: sizeData.number,
+            cartId: item.cartId
+          }
+        } catch (error) {
+        console.error(`Error loading product ${item.productId}:`, error);
+        throw error;
+    }});
 
       const productsForCart = await Promise.all(productPromises);
       return productsForCart;
@@ -29,8 +44,8 @@ const CartContextProvider = (props) => {
     }
   };
 
-  const remove = (id) => {
-    const newCart = arrItems.filter((item) => item.id !== id);
+  const remove = (cartId) => {
+    const newCart = arrItems.filter((item) => item.cartId !== cartId);
     setArrItems(newCart);
   };
 
