@@ -10,7 +10,7 @@ export const ProductPage = () => {
   const cart = useContext(CartContext);
 
   const handleAddToCart = () => {
-    if (!selectedSize) return; // Защита от добавления без размера
+    if (!selectedSize) return;
     
     const itemToAdd = {
       productId: productId,
@@ -62,8 +62,8 @@ export const ProductPage = () => {
                 value={size.id}
                 name="size_radio_button"
                 disabled={!productColor.sizes.includes(size.id)}
-                onChange={() => handleSizeSelect(size.id)} // Обработчик выбора
-                checked={selectedSize === size.id} // Отслеживаем выбор
+                onChange={() => handleSizeSelect(size.id)} 
+                checked={selectedSize === size.id}
               />
               {size.label} ({size.number})
             </label>
