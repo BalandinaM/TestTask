@@ -17,7 +17,12 @@ export const Cart = () => {
     loadProducts();
   }, [cart, cart.items]);
 
+  const TotalPrice = productsInCart.reduce((acc, item) => {
+    return acc + Number(item.price)
+  }, 0);
+
   return (
+    productsInCart.length > 0 ? (
     <div>
       <ul className="cart_list">
         {productsInCart.map((item) => (
@@ -44,6 +49,10 @@ export const Cart = () => {
           </li>
         ))}
       </ul>
-    </div>
+      <p>Количество товаров в корзине {productsInCart.length} на сумму {TotalPrice} руб.</p>
+    </div>) :
+    (
+      <p>Корзина пуста</p>
+    )
   );
 };
