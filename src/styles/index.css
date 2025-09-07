@@ -144,3 +144,18 @@ input[type="radio"]:checked:not(:disabled) + span {
   color: white;
   border: 2px solid #2563eb;
 }
+
+/*Стили корзины*/
+.cart_list {
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 30px;
+}
+
+.cart_item {
+  display: flex;
+  justify-content: space-around;
+  align-items:center;
+}
